@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <h2>Personajes de Rick and Morty</h2>
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar por nombre"
+      [(ngModel)]="searchText"
+    />
+    <button class="btn btn-primary mt-2" (click)="onSearch()">Buscar</button>
+  </div>
+
+  <div *ngIf="loading()" class="alert alert-info">Cargando...</div>
+  <div *ngIf="error()" class="alert alert-danger">{{ error() }}</div>
+
+  <div class="cards" *ngIf="!loading() && !error()">
+    <div
+      class="card m-2"
+      *ngFor="let personaje of personajesFiltrados"
+      (click)="seleccionar(personaje)"
+      [ngClass]="{
+        'border-alive': (personaje.status.toLowerCase().includes('alive') || personaje.status.toLowerCase().includes('vivo')),
+        'border-dead': (personaje.status.toLowerCase().includes('dead') || personaje.status.toLowerCase().includes('muerto')),
+        'border-unknown': (personaje.status.toLowerCase().includes('unknown') || personaje.status.toLowerCase().includes('desconocido'))
+      }"
+      style="width: 10rem; cursor: pointer;"
+    >
+      <img [src]="personaje.image" [alt]="personaje.name" class="card-img-top" />
+      <div class="card-body p-2">
+        <h5 class="card-title small">{{ personaje.name }}</h5>
+        <p class="card-text">
+          <strong>Estado:</strong> {{ personaje.status }}<br />
+          <strong>Especie:</strong> {{ personaje.species }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- detalle modal simple -->
+  <div
+    *ngIf="seleccionado"
+    class="modal-backdrop"
+    (click)="cerrar()"
+  ></div>
+  <div *ngIf="seleccionado" class="modal-dialog">
+    <div class="modal-content p-3">
+      <button
+        type="button"
+        class="close-btn"
+        (click)="cerrar()"
+      >×</button>
+      <h4>{{ seleccionado.name }}</h4>
+      <img [src]="seleccionado.image" class="img-fluid" />
+      <p><strong>Estado:</strong> {{ seleccionado.status }}</p>
+      <p><strong>Especie:</strong> {{ seleccionado.species }}</p>
+    </div>
+  </div>
+</div>
