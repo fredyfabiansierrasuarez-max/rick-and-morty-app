@@ -17,6 +17,7 @@ export class ListaPersonajes implements OnInit {
   error = signal('');
 
   searchText = '';
+  filterStatus = '';
   seleccionado: Personaje | null = null;
 
   constructor(private servicio: ServicioPersonajes) {}
@@ -26,11 +27,11 @@ export class ListaPersonajes implements OnInit {
     this.fetchCharacters();
   }
 
-  fetchCharacters(name?: string) {
+  fetchCharacters(name?: string, status?: string) {
     this.loading.set(true);
     this.error.set('');
     this.servicio
-      .getCharacters(name)
+      .getCharacters(name, status)
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
         next: (resp: ApiResponse) => {
@@ -52,7 +53,7 @@ export class ListaPersonajes implements OnInit {
     this.seleccionado = p;
   }
   onSearch() {
-    this.fetchCharacters(this.searchText.trim());
+    this.fetchCharacters(this.searchText.trim(), this.filterStatus);
   }
   cerrar() {
     this.seleccionado = null;

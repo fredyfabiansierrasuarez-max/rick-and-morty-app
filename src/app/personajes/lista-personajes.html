@@ -1,13 +1,24 @@
 <div class="container mt-4">
   <h2>Personajes de Rick and Morty</h2>
-  <div class="mb-3">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Buscar por nombre"
-      [(ngModel)]="searchText"
-    />
-    <button class="btn btn-primary mt-2" (click)="onSearch()">Buscar</button>
+  <div class="row mb-3 g-2">
+    <div class="col-md-6">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Buscar por nombre"
+        [(ngModel)]="searchText"
+      />
+    </div>
+    <div class="col-md-3">
+      <select class="form-select" [(ngModel)]="filterStatus">
+        <option value="">Todos los estados</option>
+        <option value="alive">Alive</option>
+        <option value="dead">Dead</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-primary w-100" (click)="onSearch()">Buscar</button>
+    </div>
   </div>
 
   <div *ngIf="loading()" class="alert alert-info">Cargando...</div>
