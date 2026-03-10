@@ -9,14 +9,16 @@
 
 .cards {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;          /* no wrapping, keep horizontal */
+  overflow-x: auto;          /* allow scrolling sideways */
+  justify-content: flex-start;
+  padding-bottom: 1rem;      /* space for scrollbar */
 }
 
 .card {
   border-radius: 12px;
   margin: 0.75rem;
-  width: 180px;
+  flex: 0 0 180px;           /* fixed width but flexible container */
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s, box-shadow 0.2s;
